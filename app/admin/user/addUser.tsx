@@ -1,5 +1,5 @@
 'use client'
-import React, { SyntheticEvent } from 'react'
+import { SyntheticEvent, useState } from 'react'
 import { useRouter } from 'next/navigation'
 import axios from 'axios'
 import { Role } from '@prisma/client'
@@ -7,14 +7,14 @@ import { Role } from '@prisma/client'
 const AddUser = () => {
     const roles = Object.keys(Role)
 
-    const [name, setName] = React.useState('')
-    const [email, setEmail] = React.useState('')
-    const [password, setPassword] = React.useState('')
-    const [role, setRole] = React.useState(roles[roles.length - 1])
-    const [author, setAuthor] = React.useState(false)
+    const [name, setName] = useState('')
+    const [email, setEmail] = useState('')
+    const [password, setPassword] = useState('')
+    const [role, setRole] = useState(roles[roles.length - 1])
+    const [author, setAuthor] = useState(false)
 
-    const [isMutating, setIsMutating] = React.useState(false)
-    const [isOpen, setIsOpen] = React.useState(false)
+    const [isMutating, setIsMutating] = useState(false)
+    const [isOpen, setIsOpen] = useState(false)
 
     const router = useRouter()
     const handleSubmit = async (e: SyntheticEvent) => {
@@ -87,7 +87,7 @@ const AddUser = () => {
                             {!isMutating ? (
                                 <button type="submit" className="btn btn-primary">Simpan</button>
                             ) : (
-                                <button type="submit" className="btn btn-primary">Menyimpan...</button>
+                                <button type="button" className="btn btn-primary" disabled>Menyimpan...</button>
                             )}
 
                         </div>

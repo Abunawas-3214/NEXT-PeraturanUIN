@@ -32,15 +32,15 @@ model Document {
   signedBy   String
   visibility Visibility @default(PUBLIC)
   status     Boolean
-  author     User       @relation(fields: [authorId], references: [id])
-  authorId   Int
+  author     User?      @relation(fields: [authorId], references: [id])
+  authorId   Int?
   views      Int        @default(0)
-  atachment  String
+  attachment String?
 }
 
 model Category {
   id        Int        @id @default(autoincrement())
-  name      String
+  name      String     @unique
   documents Document[]
 }
 

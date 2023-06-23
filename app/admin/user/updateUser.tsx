@@ -63,7 +63,7 @@ const UpdateUser = ({ user }: { user: User }) => {
             <button className="btn btn-info btn-sm" onClick={handleModal}>Edit</button>
             <div className={isOpen ? 'modal modal-open' : 'modal'}>
                 <div className="modal-box">
-                    <h3 className="font-bold text-lg">Tambah User</h3>
+                    <h3 className="font-bold text-lg">Edit User</h3>
                     <form onSubmit={handleUpdate}>
                         <div className='form-control w-full'>
                             <label className="label font-bold">Nama</label>
@@ -98,7 +98,7 @@ const UpdateUser = ({ user }: { user: User }) => {
                             {!isMutating ? (
                                 <button type="submit" className="btn btn-primary">Ubah</button>
                             ) : (
-                                <button type="submit" className="btn btn-primary">Mengubah...</button>
+                                <button type="button" className="btn btn-primary" disabled>Mengubah...</button>
                             )}
 
                         </div>

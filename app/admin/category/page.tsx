@@ -1,16 +1,13 @@
 import TopbarAdmin from '@/components/TopbarAdmin'
 import { PrismaClient } from '@prisma/client'
+import AddCategory from './addCategory'
+import DeleteCategory from './deleteCategory'
+import UpdateCategory from './updateCategory'
 
 const prisma = new PrismaClient
 
 const getCategories = async () => {
-    const res = await prisma.category.findMany({
-        select: {
-            id: true,
-            name: true,
-        }
-    })
-    return res
+    return await prisma.category.findMany()
 }
 
 const Category = async () => {
@@ -19,7 +16,7 @@ const Category = async () => {
         <div>
             <TopbarAdmin menuTitle={'Data Kategori'} />
             <div className='my-2'>
-
+                <AddCategory />
             </div>
             <table className="table w-full">
                 <thead>
@@ -31,10 +28,13 @@ const Category = async () => {
                 </thead>
                 <tbody>
                     {categories.map((category, index) => (
-                        <tr>
-                            <th></th>
-                            <th></th>
-                            <th></th>
+                        <tr key={category.id}>
+                            <td>{index + 1}</td>
+                            <td>{category.name}</td>
+                            <td className='flex justify-center space-x-1'>
+                                <UpdateCategory category={category} />
+                                <DeleteCategory category={category} />
+                            </td>
                         </tr>
                     ))}
 
