@@ -2,22 +2,20 @@
 import { useState } from "react"
 import { useRouter } from "next/navigation"
 import axios from "axios"
-import React from 'react'
-import { Category } from "@prisma/client"
+import { Document } from "@prisma/client"
 
-const DeleteCategory = ({ category }: { category: Category }) => {
+const DeleteDocument = ({ document }: { document: Document }) => {
     const [isOpen, setIsOpen] = useState(false)
     const [isMutating, setIsMutating] = useState(false)
     const router = useRouter()
 
-    const handleDelete = async (categoryId: number) => {
+    const handleDelete = async (documentId: number) => {
         setIsMutating(true)
-        await axios.delete(`/api/categories/${categoryId}`)
+        await axios.delete(`/api/documents/${documentId}`)
         setIsMutating(false)
         router.refresh()
         setIsOpen(false)
     }
-
     const handleModal = () => {
         setIsOpen(!isOpen)
     }
@@ -27,12 +25,12 @@ const DeleteCategory = ({ category }: { category: Category }) => {
             <button className="btn btn-error btn-sm" onClick={handleModal}>Delete</button>
             <div className={isOpen ? 'modal modal-open' : 'modal'}>
                 <div className="modal-box">
-                    <h3 className="font-bold text-lg">Apakah anda yakin akan menghapus kategori <br /> "{category.name}" ?</h3>
+                    <h3 className="font-bold text-lg">Apakah anda yakin akan menghapus Dokumen <br /> "{document.title}" ?</h3>
 
                     <div className="modal-action">
                         <button type="button" className="btn" onClick={handleModal}>Batal</button>
                         {!isMutating ? (
-                            <button type="button" className="btn btn-primary" onClick={() => handleDelete(category.id)}>Hapus</button>
+                            <button type="button" className="btn btn-primary" onClick={() => handleDelete(document.id)}>Hapus</button>
                         ) : (
                             <button type="button" className="btn btn-primary" disabled>Menghapus...</button>
                         )}
@@ -44,4 +42,4 @@ const DeleteCategory = ({ category }: { category: Category }) => {
     )
 }
 
-export default DeleteCategory
+export default DeleteDocument

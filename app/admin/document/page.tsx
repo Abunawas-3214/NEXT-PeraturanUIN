@@ -2,16 +2,12 @@ import TopbarAdmin from '@/components/TopbarAdmin'
 import { PrismaClient } from '@prisma/client'
 import React from 'react'
 import AddDocument from './addDocument'
+import DeleteDocument from './deleteDocument'
 
 const getDocuments = async () => {
     const res = await prisma.document.findMany({
-        select: {
-            id: true,
-            title: true,
-            category: true,
-            categoryId: true,
-            visibility: true,
-            status: true
+        include: {
+            category: true
         }
     })
     return res
@@ -53,16 +49,20 @@ const Document = async () => {
                             <td>{document.title}</td>
                             <td>{document.category.name}</td>
                             <td>{document.visibility}</td>
-                            <td>{document.status}</td>
+                            <td>
+                                {(document.status === true)
+                                    ? <p>Aktif</p>
+                                    : <p>Tidak Aktif</p>
+                                }
+                            </td>
                             <td className='flex justify-center space-x-1'>
                                 {/* <UpdateDocument document={document} /> */}
-                                {/* <DeleteDocument document={document} /> */}
+                                <DeleteDocument document={document} />
                             </td>
                         </tr>
                     ))}
                 </tbody>
             </table>
-
         </div>
     )
 }

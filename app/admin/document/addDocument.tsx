@@ -1,5 +1,5 @@
 'use client'
-import { SyntheticEvent, useState } from 'react'
+import { ChangeEvent, SyntheticEvent, useState } from 'react'
 import type { Category } from '@prisma/client'
 import { Visibility } from '@prisma/client'
 import { useRouter } from 'next/navigation'
@@ -21,26 +21,44 @@ const AddDocument = ({ categories }: { categories: Category[] }) => {
     const [signedBy, setSignedBy] = useState('')
     const [visibility, setVisibility] = useState(visibilities[0])
     const [status, setStatus] = useState(true)
-    const [attachment, setAttachment] = useState([])
+    const [attachment, setAttachment] = useState<File | null>(null)
 
     const [isMutating, setIsMutating] = useState(false)
     const [isOpen, setIsOpen] = useState(false)
 
     const router = useRouter()
+
+
     const handleSubmit = async (e: SyntheticEvent) => {
         e.preventDefault()
         setIsMutating(true)
-        await axios.post('/api/documents', {
-            title: title,
-            categoryId: Number(category),
-            subject: subject,
-            date: `${date.startDate}T00:00:00.000Z`,
-            initiator: initiator,
-            place: place,
-            signedBy: signedBy,
-            visibility: visibility,
-            status: status,
-            attachment: null
+        const formData = new FormData()
+        formData.append('title', title)
+        formData.append('categoryId', category)
+        formData.append('subject', subject)
+        formData.append('date', `${date.startDate}T00:00:00.000Z`)
+        formData.append('initiator', initiator)
+        formData.append('place', place)
+        formData.append('signedBy', signedBy)
+        formData.append('visibility', visibility)
+        formData.append('status', String(status))
+        formData.append('attachment', attachment ? attachment : '')
+
+
+        await axios.post('/api/documents', formData, {
+            headers: {
+                "Content-Type": "multipart/form-data",
+            },
+            // title: title,
+            // categoryId: Number(category),
+            // subject: subject,
+            // date: `${date.startDate}T00:00:00.000Z`,
+            // initiator: initiator,
+            // place: place,
+            // signedBy: signedBy,
+            // visibility: visibility,
+            // status: status,
+            // attachment: attachment
         })
 
         setTitle('')
@@ -60,8 +78,12 @@ const AddDocument = ({ categories }: { categories: Category[] }) => {
         router.refresh()
         setIsOpen(false)
     }
-
-
+    const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const file = e.target.files?.[0]
+        if (file) {
+            setAttachment(file)
+        }
+    }
     const handleModal = () => {
         setIsOpen(!isOpen)
     }
@@ -144,7 +166,7 @@ const AddDocument = ({ categories }: { categories: Category[] }) => {
 
                         <div className='form-control w-full'>
                             <label className="label font-bold">Berkas Dokumen</label>
-                            <input type="file" className="file-input file-input-bordered file-input-ghost w-full" />
+                            <input type="file" className="file-input file-input-bordered file-input-ghost w-full" onChange={handleFileChange} />
                         </div>
 
 
