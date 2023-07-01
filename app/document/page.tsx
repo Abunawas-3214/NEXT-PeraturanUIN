@@ -49,34 +49,55 @@ const Document = () => {
                         </div>
                     </div>
                 </div>
-                <div className='grow h-screen bg-slate-600'>
-                    <div className="card card-side bg-base-100 shadow-xl">
-                        <div className="card-body">
-                            <h2 className="card-title">New movie is released!</h2>
-                            <p>Click the button to watch on Jetflix app.</p>
-                            <div className="card-actions justify-end">
-                                <button className="btn btn-primary">Watch</button>
+                <div className='grow h-screen'>
+                    <div className='grid grid-cols-2 gap-4'>
+                        <div className="card card-side bg-base-100 border w-auto max-h-56 hover:shadow-md">
+                            <div className="card-body">
+                                <h2 className="card-title">New movie is 1</h2>
+                                <p>Click the button to watch on Jetflix app.</p>
+                                <div className="card-actions justify-end">
+                                    <button className="btn btn-primary">Watch</button>
+                                </div>
+                            </div>
+                        </div>
+                        <div className="card card-side bg-base-100 border w-auto max-h-56">
+                            <div className="card-body">
+                                <h2 className="card-title">New movie is 2</h2>
+                                <p>Click the button to watch on Jetflix app.</p>
+                                <div className="card-actions justify-end">
+                                    <button className="btn btn-primary">Watch</button>
+                                </div>
+                            </div>
+                        </div>
+                        <div className="card card-side bg-base-100 border w-auto max-h-56">
+                            <div className="card-body">
+                                <h2 className="card-title">New movie is 2</h2>
+                                <p>Click the button to watch on Jetflix app.</p>
+                                <div className="card-actions justify-end">
+                                    <button className="btn btn-primary">Watch</button>
+                                </div>
+                            </div>
+                        </div>
+                        <div className="card card-side bg-base-100 border w-auto max-h-56">
+                            <div className="card-body">
+                                <h2 className="card-title">New movie is 2</h2>
+                                <p>Click the button to watch on Jetflix app.</p>
+                                <div className="card-actions justify-end">
+                                    <button className="btn btn-primary">Watch</button>
+                                </div>
+                            </div>
+                        </div>
+                        <div className="card card-side bg-base-100 border w-auto max-h-56">
+                            <div className="card-body">
+                                <h2 className="card-title">New movie is 2</h2>
+                                <p>Click the button to watch on Jetflix app.</p>
+                                <div className="card-actions justify-end">
+                                    <button className="btn btn-primary">Watch</button>
+                                </div>
                             </div>
                         </div>
                     </div>
-                    <div className="card card-side bg-base-100 shadow-xl">
-                        <div className="card-body">
-                            <h2 className="card-title">New movie is released!</h2>
-                            <p>Click the button to watch on Jetflix app.</p>
-                            <div className="card-actions justify-end">
-                                <button className="btn btn-primary">Watch</button>
-                            </div>
-                        </div>
-                    </div>
-                    <div className="card card-side bg-base-100 shadow-xl">
-                        <div className="card-body">
-                            <h2 className="card-title">New movie is released!</h2>
-                            <p>Click the button to watch on Jetflix app.</p>
-                            <div className="card-actions justify-end">
-                                <button className="btn btn-primary">Watch</button>
-                            </div>
-                        </div>
-                    </div>
+
                 </div>
             </div>
         </div>
