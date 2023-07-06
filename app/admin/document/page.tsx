@@ -3,6 +3,7 @@ import { PrismaClient } from '@prisma/client'
 import React from 'react'
 import AddDocument from './addDocument'
 import DeleteDocument from './deleteDocument'
+import AddTest from './addTest'
 
 const getDocuments = async () => {
     const res = await prisma.document.findMany({
@@ -30,6 +31,9 @@ const Document = async () => {
             <TopbarAdmin menuTitle={'Data Dokumen'} />
             <div className='my-2'>
                 <AddDocument categories={categories} />
+            </div>
+            <div className="my-2">
+                <AddTest />
             </div>
             <table className='table w-full'>
                 <thead>

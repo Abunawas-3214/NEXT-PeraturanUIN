@@ -7,7 +7,7 @@ const SeachbarHome = () => {
     return (
         <div>
             <form className="flex flex-row gap-4 mt-8">
-                <input type="text" placeholder="Cari Dokumen" className="input input-bordered w-full max-w-md" value={search} onChange={(e) => setSearch(e.target.value)} />
+                <input type="text" placeholder="Cari Dokumen" className="input input-bordered w-96 max-w-md" value={search} onChange={(e) => setSearch(e.target.value)} />
                 <button type='submit' className="btn btn-primary" >Cari</button>
             </form>
         </div>

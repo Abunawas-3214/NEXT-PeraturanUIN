@@ -51,11 +51,13 @@ const Sidebar = () => {
                 <div className="flex items-center justify-between relative">
                     <div className="flex items-center pl-1 gap-4">
                         <StarIcon width={30} className='text-blue-600' />
-                        <span className={classNames('mt-2 text-lg font-bold text-text', {
-                            hidden: toggleCollapse,
-                        })}>
-                            Peraturan
-                        </span>
+                        <a href="/">
+                            <span className={classNames('mt-2 text-lg font-bold text-text', {
+                                hidden: toggleCollapse,
+                            })}>
+                                Peraturan
+                            </span>
+                        </a>
                     </div>
                     {isCollapsible && (<button className={collapseIconClasses} onClick={handleSidebarToggle}>
                         <ChevronDoubleLeftIcon width={24} className='text-gray-600' />

@@ -75,7 +75,7 @@ const UpdateUser = ({ user }: { user: User }) => {
                         </div>
                         <div className='form-control w-full'>
                             <label className="label font-bold">Password</label>
-                            <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} className="input input-bordered" placeholder='******' required />
+                            <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} className="input input-bordered" placeholder='******' />
                         </div>
 
                         <div className="columns-2">

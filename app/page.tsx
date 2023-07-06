@@ -1,9 +1,14 @@
 import Footer from '@/components/Footer'
 import Navbar from '@/components/Navbar'
 import SeachbarHome from '@/components/SeachbarHome'
-import Image from 'next/image'
+import { getServerSession } from "next-auth"
+import { authOptions } from "@/lib/auth"
 
-export default function Home() {
+
+export default async function Home() {
+  const session = await getServerSession(authOptions)
+  console.log(session?.user)
+
   return (
     <main>
       <Navbar />

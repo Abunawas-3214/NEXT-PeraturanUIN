@@ -1,7 +1,11 @@
 import Link from "next/link"
+import LoginButton from './LoginButton'
+import { getServerSession } from "next-auth"
+import { authOptions } from "@/lib/auth"
 
 
-const Navbar = () => {
+const Navbar = async () => {
+    const session = await getServerSession(authOptions)
     return (
         <div>
             <div className="navbar bg-base-100 px-20">
@@ -21,7 +25,7 @@ const Navbar = () => {
                     </ul>
                 </div>
                 <div className="navbar-end">
-                    <a className="btn">Masuk</a>
+                    {(!session) ? <LoginButton /> : <LoginButton username={session.user.name as string} author={session.user.author as boolean} />}
                 </div>
             </div>
         </div>

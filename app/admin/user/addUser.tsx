@@ -10,7 +10,7 @@ const AddUser = () => {
     const [name, setName] = useState('')
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
-    const [role, setRole] = useState(roles[roles.length - 1])
+    const [role, setRole] = useState(roles[0])
     const [author, setAuthor] = useState(false)
 
     const [isMutating, setIsMutating] = useState(false)
@@ -73,7 +73,7 @@ const AddUser = () => {
                                 <select value={role} onChange={(e) => setRole(e.target.value)} className="select select-bordered">
                                     {roles.map((role) => {
                                         return <option key={role}>{role}</option>
-                                    }).reverse()}
+                                    })}
                                 </select>
                             </div>
                             <div className='form-control w-full'>
