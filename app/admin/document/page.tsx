@@ -4,6 +4,8 @@ import React from 'react'
 import AddDocument from './addDocument'
 import DeleteDocument from './deleteDocument'
 import AddTest from './addTest'
+import { getServerSession } from "next-auth"
+import { authOptions } from "@/lib/auth"
 
 const getDocuments = async () => {
     const res = await prisma.document.findMany({
@@ -14,23 +16,21 @@ const getDocuments = async () => {
     return res
 }
 
-
 const getCategories = async () => {
     const res = await prisma.category.findMany()
     return res
 }
 
-
-
 const prisma = new PrismaClient
 
 const Document = async () => {
+    const session = await getServerSession(authOptions)
     const [documents, categories] = await Promise.all([getDocuments(), getCategories()])
     return (
         <div>
             <TopbarAdmin menuTitle={'Data Dokumen'} />
             <div className='my-2'>
-                <AddDocument categories={categories} />
+                <AddDocument categories={categories} authorId={session?.user.id as string} />
             </div>
             <div className="my-2">
                 <AddTest />

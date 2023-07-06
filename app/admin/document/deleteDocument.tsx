@@ -9,7 +9,7 @@ const DeleteDocument = ({ document }: { document: Document }) => {
     const [isMutating, setIsMutating] = useState(false)
     const router = useRouter()
 
-    const handleDelete = async (documentId: number) => {
+    const handleDelete = async (documentId: string) => {
         setIsMutating(true)
         await axios.delete(`/api/documents/${documentId}`)
         setIsMutating(false)

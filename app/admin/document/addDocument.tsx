@@ -1,12 +1,12 @@
 'use client'
-import { ChangeEvent, SyntheticEvent, useState } from 'react'
+import { SyntheticEvent, useState } from 'react'
 import type { Category } from '@prisma/client'
 import { Visibility } from '@prisma/client'
 import { useRouter } from 'next/navigation'
 import Datepicker from 'react-tailwindcss-datepicker'
 import axios from 'axios'
 
-const AddDocument = ({ categories }: { categories: Category[] }) => {
+const AddDocument = ({ categories, authorId }: { categories: Category[], authorId: string }) => {
     const visibilities = Object.keys(Visibility)
 
     const [title, setTitle] = useState('')
@@ -32,9 +32,11 @@ const AddDocument = ({ categories }: { categories: Category[] }) => {
     const handleSubmit = async (e: SyntheticEvent) => {
         e.preventDefault()
         setIsMutating(true)
+
         const formData = new FormData()
         formData.append('title', title)
         formData.append('categoryId', category)
+        formData.append('categoryName', categories.find(c => c.id === Number(category))?.name as string)
         formData.append('subject', subject)
         formData.append('date', `${date.startDate}T00:00:00.000Z`)
         formData.append('initiator', initiator)
@@ -42,23 +44,13 @@ const AddDocument = ({ categories }: { categories: Category[] }) => {
         formData.append('signedBy', signedBy)
         formData.append('visibility', visibility)
         formData.append('status', String(status))
+        formData.append('authorId', authorId)
         formData.append('attachment', attachment ? attachment : '')
-
 
         await axios.post('/api/documents', formData, {
             headers: {
                 "Content-Type": "multipart/form-data",
             },
-            // title: title,
-            // categoryId: Number(category),
-            // subject: subject,
-            // date: `${date.startDate}T00:00:00.000Z`,
-            // initiator: initiator,
-            // place: place,
-            // signedBy: signedBy,
-            // visibility: visibility,
-            // status: status,
-            // attachment: attachment
         })
 
         setTitle('')
@@ -166,7 +158,7 @@ const AddDocument = ({ categories }: { categories: Category[] }) => {
 
                         <div className='form-control w-full'>
                             <label className="label font-bold">Berkas Dokumen</label>
-                            <input type="file" className="file-input file-input-bordered file-input-ghost w-full" onChange={handleFileChange} />
+                            <input type="file" className="file-input file-input-bordered file-input-ghost w-full" onChange={handleFileChange} required />
                         </div>
 
 

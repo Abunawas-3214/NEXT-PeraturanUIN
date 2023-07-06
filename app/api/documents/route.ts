@@ -1,21 +1,25 @@
 import { PrismaClient, Visibility } from '@prisma/client'
-import type { Document } from '@prisma/client'
-import { NextApiResponse, NextApiRequest } from 'next'
 import { NextResponse } from 'next/server'
-import { IncomingForm } from 'formidable'
-import exp from 'constants'
+import fs from 'fs'
+import { randomUUID } from 'crypto'
 
 const prisma = new PrismaClient()
 
 export const POST = async (req: Request) => {
     const formData = await req.formData()
+
     const visibility = formData.get('visibility') as Visibility
-    const attachment = formData.get('attachment') as File
 
-    // const entries = Array.from(formData.entries());
+    const categoryName = formData.get('categoryName')
 
-    // console.log(entries.forEach((item: any) => console.log(item)))
-    // console.log(entries[0][1])
+    const attachmentName: string = randomUUID()
+
+    const file = formData.get('attachment') as Blob
+    const mimeType = file.type;
+    const fileExtension = mimeType.split("/")[1]
+    const buffer = Buffer.from(await file.arrayBuffer())
+
+    fs.writeFileSync(`attachments/${categoryName}/${attachmentName}.${fileExtension}`, buffer)
 
     const document = await prisma.document.create({
         data: {
@@ -28,7 +32,8 @@ export const POST = async (req: Request) => {
             signedBy: String(formData.get('signedBy')),
             visibility: visibility,
             status: Boolean(formData.get('status')),
-            attachment: attachment.name
+            authorId: String(formData.get('authorId')),
+            attachment: attachmentName
         }
     })
 

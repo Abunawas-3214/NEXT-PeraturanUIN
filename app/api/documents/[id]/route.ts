@@ -1,36 +1,34 @@
 import { NextResponse } from "next/server";
 import { PrismaClient } from "@prisma/client";
 import type { Document } from "@prisma/client";
+import fs from 'fs'
 
 const prisma = new PrismaClient();
 
-export const DELETE = async (req: Request, { params }: { params: { id: String } }) => {
-    const category = await prisma.document.delete({
+export const DELETE = async (req: Request, { params }: { params: { id: string } }) => {
+
+    const document = await prisma.document.findFirst({
         where: {
-            id: Number(params.id)
+            id: params.id
+        },
+        select: {
+            category: true,
+            attachment: true
         }
     })
-    return NextResponse.json(category, { status: 200 })
+
+    fs.unlinkSync(`attachments/${document?.category.name}/${document?.attachment}.pdf`)
+
+    const dletedDocument = await prisma.document.delete({
+        where: {
+            id: params.id
+        }
+    })
+
+    return NextResponse.json(dletedDocument, { status: 200 })
 }
 
-export const PATCH = async (req: Request, { params }: { params: { id: String } }) => {
+export const PATCH = async (req: Request, { params }: { params: { id: string } }) => {
     const body: Document = await req.json()
 
-    const category = await prisma.document.update({
-        where: {
-            id: Number(params.id)
-        },
-        data: {
-            title: body.title,
-            categoryId: Number(body.categoryId),
-            subject: body.subject,
-            date: body.date,
-            initiator: body.initiator,
-            place: body.place,
-            signedBy: body.signedBy,
-            visibility: body.visibility,
-            status: body.status,
-            attachment: body.attachment
-        }
-    })
 }

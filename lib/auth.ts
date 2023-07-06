@@ -70,6 +70,7 @@ export const authOptions: NextAuthOptions = {
         },
         async session({ token, session }) {
             if (token) {
+                session.user.id = token.id
                 session.user.name = token.name
                 session.user.email = token.email
                 session.user.role = token.role
@@ -88,6 +89,7 @@ export const authOptions: NextAuthOptions = {
                 return token
             }
             return {
+                id: dbUser.id,
                 name: dbUser.name,
                 email: dbUser.email,
                 role: dbUser.role,
