@@ -53,6 +53,30 @@ const AddDocument = ({ categories, authorId }: { categories: Category[], authorI
             },
         })
 
+        setIsMutating(false)
+        router.refresh()
+        setIsOpen(false)
+    }
+    const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const file = e.target.files?.[0]
+        if (file) {
+            setAttachment(file)
+        }
+    }
+    const handleModal = () => {
+        (isOpen == true) ? resetField() : ''
+        setIsOpen(!isOpen)
+    }
+
+    const handleDate = (date: any) => {
+        setDate(date)
+    }
+
+    const handleStatus = () => {
+        setStatus(!status)
+    }
+
+    const resetField = () => {
         setTitle('')
         setCategory('')
         setSubject('')
@@ -65,27 +89,6 @@ const AddDocument = ({ categories, authorId }: { categories: Category[], authorI
         setSignedBy('')
         setVisibility(visibilities[0])
         setStatus(true)
-
-        setIsMutating(false)
-        router.refresh()
-        setIsOpen(false)
-    }
-    const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        const file = e.target.files?.[0]
-        if (file) {
-            setAttachment(file)
-        }
-    }
-    const handleModal = () => {
-        setIsOpen(!isOpen)
-    }
-
-    const handleDate = (date: any) => {
-        setDate(date)
-    }
-
-    const handleStatus = () => {
-        setStatus(!status)
     }
 
 

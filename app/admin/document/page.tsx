@@ -3,6 +3,8 @@ import { PrismaClient } from '@prisma/client'
 import React from 'react'
 import AddDocument from './addDocument'
 import DeleteDocument from './deleteDocument'
+import UpdateDocument from './updateDocument'
+import ViewDocument from './vewDocument'
 import AddTest from './addTest'
 import { getServerSession } from "next-auth"
 import { authOptions } from "@/lib/auth"
@@ -60,7 +62,8 @@ const Document = async () => {
                                 }
                             </td>
                             <td className='flex justify-center space-x-1'>
-                                {/* <UpdateDocument document={document} /> */}
+                                <ViewDocument document={document} />
+                                <UpdateDocument document={document} categories={categories} />
                                 <DeleteDocument document={document} />
                             </td>
                         </tr>
