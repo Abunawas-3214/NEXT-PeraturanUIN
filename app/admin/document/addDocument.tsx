@@ -89,6 +89,7 @@ const AddDocument = ({ categories, authorId }: { categories: Category[], authorI
         setSignedBy('')
         setVisibility(visibilities[0])
         setStatus(true)
+        setIsMutating(false)
     }
 
 
@@ -110,7 +111,7 @@ const AddDocument = ({ categories, authorId }: { categories: Category[], authorI
                             </div>
                             <div className='form-control w-full'>
                                 <label className="label font-bold">Ketegori</label>
-                                <select value={category} onChange={(e) => setCategory(e.target.value)} className="select select-bordered">
+                                <select value={category} onChange={(e) => setCategory(e.target.value)} className="select select-bordered" required>
                                     <option value="" disabled >Pilih Kategori Dokumen</option>
                                     {categories.map((category) => (
                                         <option value={category.id} key={category.id}>{category.name}</option>

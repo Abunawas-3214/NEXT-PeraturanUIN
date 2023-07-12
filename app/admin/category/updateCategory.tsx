@@ -1,19 +1,19 @@
 'use client'
-import React, { SyntheticEvent } from 'react'
+import { useState, SyntheticEvent } from 'react'
 import type { Category } from '@prisma/client'
 import { useRouter } from 'next/navigation'
 import axios from 'axios'
 
 const UpdateCategory = ({ category }: { category: Category }) => {
-    const [name, setName] = React.useState(category.name)
-    const [isOpen, setIsOpen] = React.useState(false)
-    const [isMutating, setIsMutating] = React.useState(false)
+    const [name, setName] = useState(category.name)
+    const [isOpen, setIsOpen] = useState(false)
+    const [isMutating, setIsMutating] = useState(false)
 
     const router = useRouter()
 
     const handleUpdate = async (e: SyntheticEvent) => {
-        setIsMutating(true)
         e.preventDefault()
+        setIsMutating(true)
         await axios.patch(`/api/categories/${category.id}`, {
             name: name
         })

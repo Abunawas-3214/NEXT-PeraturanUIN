@@ -1,5 +1,5 @@
 'use client'
-import React, { SyntheticEvent } from 'react'
+import { useState, SyntheticEvent } from 'react'
 import { useRouter } from 'next/navigation'
 import axios from 'axios'
 import { Role } from '@prisma/client'
@@ -14,14 +14,14 @@ type User = {
 }
 
 const UpdateUser = ({ user }: { user: User }) => {
-    const [name, setName] = React.useState(user.name)
-    const [email, setEmail] = React.useState(user.email)
-    const [password, setPassword] = React.useState('')
-    const [role, setRole] = React.useState(user.role)
-    const [author, setAuthor] = React.useState(user.author)
+    const [name, setName] = useState(user.name)
+    const [email, setEmail] = useState(user.email)
+    const [password, setPassword] = useState('')
+    const [role, setRole] = useState(user.role)
+    const [author, setAuthor] = useState(user.author)
 
-    const [isMutating, setIsMutating] = React.useState(false)
-    const [isOpen, setIsOpen] = React.useState(false)
+    const [isMutating, setIsMutating] = useState(false)
+    const [isOpen, setIsOpen] = useState(false)
 
     const roles = Object.keys(Role)
 

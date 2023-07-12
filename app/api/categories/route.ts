@@ -10,6 +10,5 @@ export const POST = async (req: Request) => {
     const category = await prisma.category.create({
         data: body
     })
-    fs.mkdirSync(`attachments/${body.name}`, { recursive: true })
     return NextResponse.json(category, { status: 201 })
 }

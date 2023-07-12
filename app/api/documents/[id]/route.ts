@@ -1,8 +1,8 @@
 import { NextResponse } from "next/server";
-import { PrismaClient } from "@prisma/client";
+import { PrismaClient, Visibility } from "@prisma/client";
 import type { Document } from "@prisma/client";
 import fs from 'fs'
-import path from "path"
+import { randomUUID } from 'crypto'
 
 const prisma = new PrismaClient()
 
@@ -17,7 +17,7 @@ export const GET = async (req: Request, { params }: { params: { id: string } }) 
         }
     })
 
-    const filePath = `attachments/${document?.category.name}/${document?.attachment}.pdf`
+    const filePath = `attachments/${document?.attachment}.pdf`
     const fileBuffer = fs.readFileSync(filePath)
     const fileContent = new Blob([fileBuffer], { type: 'application/pdf' })
     console.log(fileContent)
@@ -44,7 +44,7 @@ export const DELETE = async (req: Request, { params }: { params: { id: string } 
         }
     })
 
-    fs.unlinkSync(`attachments/${document?.category.name}/${document?.attachment}.pdf`)
+    fs.unlinkSync(`attachments/${document?.attachment}.pdf`)
 
     const deletedDocument = await prisma.document.delete({
         where: {
@@ -56,6 +56,44 @@ export const DELETE = async (req: Request, { params }: { params: { id: string } 
 }
 
 export const PATCH = async (req: Request, { params }: { params: { id: string } }) => {
-    const body: Document = await req.json()
+    const formData = await req.formData()
+    const visibility = formData.get('visibility') as Visibility
 
+    let attachmentNameNew: string = ''
+    if (formData.get('attachment')) {
+        const attachmentOld = await prisma.document.findFirst({
+            where: {
+                id: params.id
+            },
+            select: {
+                attachment: true
+            }
+        })
+        attachmentNameNew = randomUUID()
+        const file = formData.get('attachment') as Blob
+        const mimeType = file.type;
+        const fileExtension = mimeType.split("/")[1]
+        const buffer = Buffer.from(await file.arrayBuffer())
+
+        fs.unlinkSync(`attachments/${attachmentOld?.attachment}.pdf`)
+        fs.writeFileSync(`attachments/${attachmentNameNew}.${fileExtension}`, buffer)
+    }
+    const document = await prisma.document.update({
+        where: {
+            id: params.id
+        },
+        data: {
+            title: String(formData.get('title')),
+            categoryId: Number(formData.get('categoryId')),
+            subject: String(formData.get('subject')),
+            date: String(formData.get('date')),
+            initiator: String(formData.get('initiator')),
+            place: String(formData.get('place')),
+            signedBy: String(formData.get('signedBy')),
+            visibility: visibility,
+            status: Boolean(formData.get('status')),
+            ...(formData.get('attachment') ? { attachment: attachmentNameNew } : {})
+        }
+    })
+    return NextResponse.json(document, { status: 201 });
 }

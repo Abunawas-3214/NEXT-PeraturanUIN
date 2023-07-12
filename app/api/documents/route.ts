@@ -7,19 +7,12 @@ const prisma = new PrismaClient()
 
 export const POST = async (req: Request) => {
     const formData = await req.formData()
-
     const visibility = formData.get('visibility') as Visibility
-
-    const categoryName = formData.get('categoryName')
-
     const attachmentName: string = randomUUID()
-
     const file = formData.get('attachment') as Blob
     const mimeType = file.type;
     const fileExtension = mimeType.split("/")[1]
     const buffer = Buffer.from(await file.arrayBuffer())
-
-    fs.writeFileSync(`attachments/${categoryName}/${attachmentName}.${fileExtension}`, buffer)
 
     const document = await prisma.document.create({
         data: {
@@ -36,6 +29,8 @@ export const POST = async (req: Request) => {
             attachment: attachmentName
         }
     })
-
+    if (document) {
+        fs.writeFileSync(`attachments/${attachmentName}.${fileExtension}`, buffer)
+    }
     return NextResponse.json(document, { status: 201 });
 }

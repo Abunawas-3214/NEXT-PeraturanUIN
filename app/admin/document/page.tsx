@@ -34,9 +34,6 @@ const Document = async () => {
             <div className='my-2'>
                 <AddDocument categories={categories} authorId={session?.user.id as string} />
             </div>
-            <div className="my-2">
-                <AddTest />
-            </div>
             <table className='table w-full'>
                 <thead>
                     <tr>
