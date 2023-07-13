@@ -13,8 +13,8 @@ const UpdateDocument = ({ document, categories }: { document: Document, categori
     const [category, setCategory] = useState(document.categoryId)
     const [subject, setSubject] = useState(document.subject)
     const [date, setDate] = useState({
-        startDate: document.date.toISOString(),
-        endDate: document.date.toISOString()
+        startDate: document.date.toISOString().substring(0, 10),
+        endDate: document.date.toISOString().substring(0, 10)
     })
     const [initiator, setInitiator] = useState(document.initiator)
     const [place, setPlace] = useState(document.place)
@@ -160,7 +160,7 @@ const UpdateDocument = ({ document, categories }: { document: Document, categori
 
                                 <div className='form-control w-full'>
                                     <label className="label font-bold">Berkas Dokumen Baru</label>
-                                    <input type="file" className="file-input file-input-bordered file-input-ghost w-full" onChange={handleFileChange} />
+                                    <input type="file" className="file-input file-input-bordered file-input-ghost w-full" onChange={handleFileChange} accept="application/pdf" />
                                 </div>
                             </div>
 

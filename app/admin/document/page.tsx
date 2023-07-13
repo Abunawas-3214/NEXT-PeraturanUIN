@@ -1,19 +1,28 @@
 import TopbarAdmin from '@/components/TopbarAdmin'
 import { PrismaClient } from '@prisma/client'
+import type { Prisma, Role } from '@prisma/client'
 import React from 'react'
 import AddDocument from './addDocument'
 import DeleteDocument from './deleteDocument'
 import UpdateDocument from './updateDocument'
 import ViewDocument from './vewDocument'
-import AddTest from './addTest'
 import { getServerSession } from "next-auth"
 import { authOptions } from "@/lib/auth"
 
-const getDocuments = async () => {
+const getDocuments = async ({ userId, userRole }: { userId: string, userRole: Role }) => {
+    const isAdmin = userRole === "ADMIN"
+    let docmentAuthorId: Prisma.DocumentWhereInput = {}
+    if (!isAdmin) {
+        docmentAuthorId = {
+            authorId: userId
+        }
+    }
+
     const res = await prisma.document.findMany({
+        where: docmentAuthorId,
         include: {
             category: true
-        }
+        },
     })
     return res
 }
@@ -27,7 +36,7 @@ const prisma = new PrismaClient
 
 const Document = async () => {
     const session = await getServerSession(authOptions)
-    const [documents, categories] = await Promise.all([getDocuments(), getCategories()])
+    const [documents, categories] = await Promise.all([getDocuments({ userId: session?.user.id as string, userRole: session?.user.role as Role }), getCategories()])
     return (
         <div>
             <TopbarAdmin menuTitle={'Data Dokumen'} />

@@ -5,10 +5,10 @@ import axios from 'axios'
 import { Role } from '@prisma/client'
 
 type User = {
-    id: number,
+    id: string,
     name: string,
-    email: string,
-    password: string,
+    email: string | null,
+    password: string | null,
     role: string,
     author: boolean
 }
@@ -71,7 +71,7 @@ const UpdateUser = ({ user }: { user: User }) => {
                         </div>
                         <div className='form-control w-full'>
                             <label className="label font-bold">Email</label>
-                            <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} className="input input-bordered" placeholder='Email' required />
+                            <input type="email" value={(email) ? email : ''} onChange={(e) => setEmail(e.target.value)} className="input input-bordered" placeholder='Email' required />
                         </div>
                         <div className='form-control w-full'>
                             <label className="label font-bold">Password</label>

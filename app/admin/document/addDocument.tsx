@@ -162,7 +162,7 @@ const AddDocument = ({ categories, authorId }: { categories: Category[], authorI
 
                         <div className='form-control w-full'>
                             <label className="label font-bold">Berkas Dokumen</label>
-                            <input type="file" className="file-input file-input-bordered file-input-ghost w-full" onChange={handleFileChange} required />
+                            <input type="file" className="file-input file-input-bordered file-input-ghost w-full" onChange={handleFileChange} accept="application/pdf" required />
                         </div>
 
 

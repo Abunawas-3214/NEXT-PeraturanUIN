@@ -4,11 +4,8 @@ import { useRouter } from "next/navigation"
 import axios from "axios"
 
 type User = {
-    id: number,
+    id: string,
     name: string,
-    email: string,
-    role: string,
-    author: boolean
 }
 
 const DeleteUser = ({ user }: { user: User }) => {
@@ -16,7 +13,7 @@ const DeleteUser = ({ user }: { user: User }) => {
     const [isMutating, setIsMutating] = useState(false)
     const router = useRouter()
 
-    const handleDelete = async (userId: number) => {
+    const handleDelete = async (userId: string) => {
         setIsMutating(true)
         await axios.delete(`/api/users/${userId}`)
 
