@@ -62,6 +62,7 @@ model VerificationToken {
 model Document {
   id         String     @id @default(cuid())
   title      String
+  slug       String     @unique
   category   Category   @relation(fields: [categoryId], references: [id])
   categoryId Int
   subject    String

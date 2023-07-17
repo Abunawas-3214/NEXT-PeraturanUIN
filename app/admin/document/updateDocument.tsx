@@ -5,6 +5,7 @@ import type { Document, Category } from '@prisma/client'
 import { Visibility } from '@prisma/client'
 import { useRouter } from 'next/navigation'
 import Datepicker from 'react-tailwindcss-datepicker'
+import AttachmentView from '@/components/document/AttachmentView'
 
 const UpdateDocument = ({ document, categories }: { document: Document, categories: Category[] }) => {
     const visibilities = Object.keys(Visibility)
@@ -96,7 +97,7 @@ const UpdateDocument = ({ document, categories }: { document: Document, categori
 
                         <div className="flex w-full h-max">
 
-                            <div className="w-full">
+                            <div className="grow">
                                 <div className='form-control w-full'>
                                     <label className="label font-bold">Nama</label>
                                     <input type="text" value={title} onChange={(e) => setTitle(e.target.value)} className="input input-bordered" placeholder='Nama' required />
@@ -165,13 +166,9 @@ const UpdateDocument = ({ document, categories }: { document: Document, categori
                             </div>
 
                             <div className="divider divider-horizontal"></div>
-
-                            {(fileURL === '')
-                                ? <div className="w-full flex justify-center">
-                                    <span className="loading loading-spinner loading-lg m-auto"></span>
-                                </div>
-                                : <embed src={fileURL + '#toolbar=0&navpanes=0&scrollbar=0'} className='w-full' />
-                            }
+                            <div className='h-auto w-1/3'>
+                                <AttachmentView fileURL={fileURL} />
+                            </div>
                         </div>
 
                         <div className='modal-action'>

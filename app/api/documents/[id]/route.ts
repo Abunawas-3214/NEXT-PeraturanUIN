@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import { PrismaClient, Visibility } from "@prisma/client";
-import type { Document } from "@prisma/client";
+import slugify from 'slugify'
 import fs from 'fs'
 import { randomUUID } from 'crypto'
 
@@ -84,6 +84,7 @@ export const PATCH = async (req: Request, { params }: { params: { id: string } }
         },
         data: {
             title: String(formData.get('title')),
+            slug: slugify(String(formData.get('title')), { lower: true }),
             categoryId: Number(formData.get('categoryId')),
             subject: String(formData.get('subject')),
             date: String(formData.get('date')),

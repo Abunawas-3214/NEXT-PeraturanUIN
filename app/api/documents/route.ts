@@ -1,5 +1,6 @@
 import { PrismaClient, Visibility } from '@prisma/client'
 import { NextResponse } from 'next/server'
+import slugify from 'slugify'
 import fs from 'fs'
 import { randomUUID } from 'crypto'
 
@@ -17,6 +18,7 @@ export const POST = async (req: Request) => {
     const document = await prisma.document.create({
         data: {
             title: String(formData.get('title')),
+            slug: slugify(String(formData.get('title')), { lower: true }),
             categoryId: Number(formData.get('categoryId')),
             subject: String(formData.get('subject')),
             date: String(formData.get('date')),
