@@ -9,10 +9,16 @@ const prisma = new PrismaClient()
 export const GET = async (req: Request, { params }: { params: { id: string } }) => {
     const document = await prisma.document.findFirst({
         where: {
-            id: params.id
+            OR: [
+                {
+                    id: params.id
+                },
+                {
+                    slug: params.id
+                }
+            ]
         },
         select: {
-            category: true,
             attachment: true
         }
     })
@@ -21,8 +27,6 @@ export const GET = async (req: Request, { params }: { params: { id: string } }) 
     const fileBuffer = fs.readFileSync(filePath)
     const fileContent = new Blob([fileBuffer], { type: 'application/pdf' })
     console.log(fileContent)
-    // console.log(fileContent.size)
-    // return NextResponse.json(fileContent, { status: 200 })
     return new Response(fileContent, {
         headers: {
             'Content-Type': 'application/pdf',

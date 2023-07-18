@@ -3,7 +3,6 @@
 import { useState, useEffect } from "react"
 import axios from 'axios'
 
-
 const FileView = ({ documentId }: { documentId: string }) => {
     const [fileData, setFileData] = useState('');
 
@@ -20,7 +19,6 @@ const FileView = ({ documentId }: { documentId: string }) => {
     }, [])
     return (
         <>
-            <div>{documentId}</div>
             {
                 (fileData !== '')
                     ? <embed src={fileData} className="w-full h-full" />
