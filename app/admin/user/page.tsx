@@ -1,8 +1,11 @@
 import { PrismaClient } from '@prisma/client'
+import { getServerSession } from "next-auth"
+import { authOptions } from "@/lib/auth"
 import AddUser from './addUser'
 import DeleteUser from './deleteUser'
 import UpdateUser from './updateUser'
 import TopbarAdmin from '@/components/TopbarAdmin'
+import { redirect } from 'next/navigation'
 
 const prisma = new PrismaClient()
 
@@ -21,6 +24,11 @@ const getUsers = async () => {
 }
 
 const User = async () => {
+    const session = await getServerSession(authOptions)
+    if (session?.user.role !== 'ADMIN') {
+        throw new Error('Hanya admin yang dapat masuk pada menu ini')
+    }
+
     const users = await getUsers()
     return (
         <div>
@@ -55,7 +63,6 @@ const User = async () => {
                             </td>
                         </tr>
                     ))}
-
                 </tbody>
             </table>
         </div>

@@ -38,7 +38,9 @@ const Document = async () => {
                 <button className="btn btn-primary">Cari Dokumnen</button>
             </div>
             <div className='flex gap-8'>
-                <FilterControll />
+                <div className='flex-none w-72'>
+                    <FilterControll />
+                </div>
                 <div className='grow h-screen'>
                     <div className='grid grid-cols-2 gap-x-8 gap-y-6'>
                         {documents.map((document) => (

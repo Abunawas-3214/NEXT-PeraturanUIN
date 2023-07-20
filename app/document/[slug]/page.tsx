@@ -31,21 +31,20 @@ const FullDocument = async ({ params }: { params: { slug: string } }) => {
         throw new Error('Ini hiden document, harus masuk')
     }
 
-
-
     return (
         <div className='justify-items-center text-center'>
-            <div className="bg-slate-400 h-full">
-                <h1 className='text-6xl font-medium'>{document?.title}</h1>
+            <div className=" h-full mt-4">
+                <h1 className='text-6xl font-medium mb-2'>{document?.title}</h1>
                 <h2 className='text-2xl font-medium'>{`${document?.place} - ${String(document?.date.toLocaleDateString())}`}</h2>
             </div>
-            <div className="bg-slate-300 flex h-screen flex-col-2 mt-4 gap-4">
-                <div className="bg-slate-400 grow">
+            <div className="flex flex-col-2 my-12 gap-4">
+                <div className="flex flex-col place-items-end bg-white p-4 rounded-xl shadow-lg grow">
                     <FileView documentId={params.slug} />
+                    <button className='btn btn-primary max-w-fit mt-4'>Unduh Dokumen</button>
                 </div>
-                <div className="bg-slate-400 w-full max-w-xs">
+                <div className="w-1/4">
                     <div className="card w-full bg-base-100 shadow-xl">
-                        <div className="card-body text-left">
+                        <div className="card-body text-left max-w-xs">
                             <h2 className="card-title">Kategori</h2>
                             <p>{document?.category?.name}</p>
                             <div className="divider"></div>

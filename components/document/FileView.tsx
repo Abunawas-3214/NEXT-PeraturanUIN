@@ -21,7 +21,7 @@ const FileView = ({ documentId }: { documentId: string }) => {
         <>
             {
                 (fileData !== '')
-                    ? <embed src={fileData} className="w-full h-full" />
+                    ? <embed src={fileData + '#toolbar=0&navpanes=0&scrollbar=0'} className="w-full h-full" />
                     : <div className="w-full h-full flex justify-center">
                         <span className="loading loading-spinner loading-lg m-auto"></span>
                     </div>
